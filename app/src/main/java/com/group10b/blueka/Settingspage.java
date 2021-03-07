@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,8 +33,10 @@ public class Settingspage extends AppCompatActivity {
     ToggleButton btnToggleDark;
     ToggleButton bluetoothbutton;
     ToggleButton locationbutton;
+    ToggleButton internetbutton;
     BluetoothAdapter myBluetoothAdapter;
     LocationManager locationManager;
+    ConnectivityManager conMgr ;
     boolean locationStatus;
     //Creating an object of intent
     Intent btEnablingIntent;
@@ -68,7 +72,6 @@ public class Settingspage extends AppCompatActivity {
         locationbutton = (ToggleButton) findViewById(R.id.location_button);
         checkLocationButtonState();
 
-
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         assert locationManager != null;
         locationStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -84,6 +87,22 @@ public class Settingspage extends AppCompatActivity {
             }
         }));
 
+        //------------------------InternetButton---------------------------
+        internetbutton = (ToggleButton) findViewById(R.id.internet_button);
+        checkNetworkStatus();
+
+        conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        internetbutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    internetON();
+                } else {
+                    internetOFF();
+                }
+            }
+        });
         //----------------Toolbarcode---------------------------------------
         Toolbar toolbars = findViewById(R.id.toolbarsettings);
         setSupportActionBar(toolbars);
@@ -270,9 +289,7 @@ public class Settingspage extends AppCompatActivity {
 
         if (!isLocationEnabled(getApplicationContext())){
             locationbutton.setChecked(true);
-            openMainpage();
-            Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
-            startActivity(intent);
+            refresh();
             //toast
         }
     }
@@ -282,9 +299,7 @@ public class Settingspage extends AppCompatActivity {
         if (isLocationEnabled(getApplicationContext())){
             locationbutton.setChecked(false);
 
-            openMainpage();
-            Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
-            startActivity(intent);
+            refresh();
             //toast
         }
     }
@@ -304,6 +319,65 @@ public class Settingspage extends AppCompatActivity {
             locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
             return !TextUtils.isEmpty(locationProviders);
         }
+    }
+
+    public void openNetworkSettings(){
+        internetbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), 0);
+                checkNetworkStatus();
+            }
+        });
+    }
+
+    public void internetON(){
+        openNetworkSettings();
+        if (isConnectionEnable() == false){
+            internetbutton.setChecked(true);
+            refresh();
+        }
+    }
+
+    public void internetOFF(){
+        openNetworkSettings();
+        if (isConnectionEnable()){
+            internetbutton.setChecked(false);
+            refresh();
+        }
+    }
+
+    public void checkNetworkStatus(){
+        if (isConnectionEnable()){
+            internetbutton.setChecked(true);
+        } else {
+            internetbutton.setChecked(false);
+        }
+    }
+    public boolean isConnectionEnable(){
+        final ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            // notify user you are online
+            return true;
+        } else {
+            // notify user you are not online
+            return false;
+        }
+        /*if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                && conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+            // notify user you are not online
+            return false;
+        } else {
+            return true;
+        }*/
+        //return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    public void refresh(){
+        openMainpage();
+        Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
+        startActivity(intent);
     }
 
 
