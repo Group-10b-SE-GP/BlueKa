@@ -90,6 +90,7 @@
                     android:layout_marginLeft="335dp"
                     android:layout_centerVertical="true"
                     android:background="@drawable/bluetoothicon"
+                    
                     android:textOff=""
                     android:textOn="" />
 

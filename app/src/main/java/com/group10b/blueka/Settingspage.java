@@ -1,6 +1,7 @@
 package com.group10b.blueka;
 
 import android.Manifest;
+import android.accessibilityservice.AccessibilityService;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +9,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -62,18 +66,23 @@ public class Settingspage extends AppCompatActivity {
 
         //------------------------LocationButton--------------------
         locationbutton = (ToggleButton) findViewById(R.id.location_button);
+        checkLocationButtonState();
+
+
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         assert locationManager != null;
         locationStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        checkLocationButtonState();
-        locationbutton.setOnClickListener(new View.OnClickListener() {
+        locationbutton.setOnCheckedChangeListener((new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    locationON();
+                } else {
+                    locationOFF();
 
+                }
             }
-        });
+        }));
 
         //----------------Toolbarcode---------------------------------------
         Toolbar toolbars = findViewById(R.id.toolbarsettings);
@@ -167,8 +176,6 @@ public class Settingspage extends AppCompatActivity {
                 });
 
 
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu settingsmenu){
@@ -194,6 +201,8 @@ public class Settingspage extends AppCompatActivity {
     public void setBluetoothButtonStatus(){
         if (myBluetoothAdapter.isEnabled()){
             bluetoothbutton.setChecked(true);
+
+
         } else if (!myBluetoothAdapter.isEnabled()){
             bluetoothbutton.setChecked(false);
         }
@@ -235,13 +244,67 @@ public class Settingspage extends AppCompatActivity {
     }
 
     public void checkLocationButtonState(){
-        if (locationStatus == true){
-            Toast.makeText(getApplicationContext(),"Location is enabled", Toast.LENGTH_SHORT).show();
+        if (isLocationEnabled(getApplicationContext())){
             locationbutton.setChecked(true);
         } else {
-            Toast.makeText(getApplicationContext(),"Location is disabled", Toast.LENGTH_SHORT).show();
             locationbutton.setChecked(false);
         }
     }
+
+
+    public void openLocationSettings(){
+        locationbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Open location settings
+                //startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+                checkLocationButtonState();
+
+            }
+        });
+    }
+
+    public void locationON(){
+        openLocationSettings();
+
+        if (!isLocationEnabled(getApplicationContext())){
+            locationbutton.setChecked(true);
+            openMainpage();
+            Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
+            startActivity(intent);
+            //toast
+        }
+    }
+
+    public void locationOFF(){
+        openLocationSettings();
+        if (isLocationEnabled(getApplicationContext())){
+            locationbutton.setChecked(false);
+
+            openMainpage();
+            Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
+            startActivity(intent);
+            //toast
+        }
+    }
+
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+        } else {
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
+
 
 }

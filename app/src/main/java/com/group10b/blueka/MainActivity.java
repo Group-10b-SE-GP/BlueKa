@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         offset = sntpClient.getOffsetString();
-        Toast.makeText(getApplicationContext(),"Offset: "+sntpClient.getOffsetString(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Offset: "+sntpClient.getOffsetString(),Toast.LENGTH_LONG).show();
         timeOffset = new TimeOffset();
         timeOffset.getOffsetValue();
 
