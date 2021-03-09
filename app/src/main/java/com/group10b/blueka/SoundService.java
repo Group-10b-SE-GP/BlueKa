@@ -1,5 +1,6 @@
 package com.group10b.blueka;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -8,7 +9,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-
+import androidx.annotation.RestrictTo;
 
 
 public class SoundService extends Service {
@@ -23,9 +24,15 @@ public class SoundService extends Service {
         return null;
     }
 
+
+
+    static boolean started;
+    static boolean destroyed;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        started = true;
         mediaPlayer = MediaPlayer.create(this, R.raw.merdeka);
 
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -59,6 +66,7 @@ public class SoundService extends Service {
 
     @Override
     public void onDestroy(){
+        destroyed = true;
         mediaPlayer.stop();
     }
 }
