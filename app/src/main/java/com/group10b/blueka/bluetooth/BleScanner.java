@@ -249,7 +249,7 @@ public class BleScanner {
             // }else{
             // continue send number
             // }
-            if (result.length() > 1){
+            if (result.length() > 2){
                 Log.d("Client Offset: ", String.valueOf(timeOffset.getOffsetValue()));
                 scan_results_consumer.receiveNumofConnected(Integer.toString(MainActivity.getInstance().getMaxConnectedDevice()));
                 MainActivity.getInstance().playMusic(clientMusicTime);

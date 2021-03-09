@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:layout_marginLeft="120dp"
-                android:text="Enabling Bluetooth allow us to enhance your experience by presenting information about the site objects as you are looking them."
+                android:text="Enabling Bluetooth allow the app to scan and advertise for a successful connection."
                 android:textSize="15dp"
                 android:textColor="@color/textcolor"
                 android:textStyle="italic" />
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:layout_marginLeft="120dp"
-                android:text="Enabling your Location will allow us to guide you around the Site and help you locate other areas of the site that you are interested in"
+                android:text="Enabling your Location will allow the app to connect over Bluetooth Low Energy (BLE). "
                 android:textSize="15dp"
                 android:textColor="@color/textcolor"
                 android:textStyle="italic" />
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:layout_marginLeft="120dp"
-                android:text="Enabling your WiFi or Data allow the apps to play synchronously in two or more devices"
+                android:text="Enabling your WiFi or Data allow the app to play synchronously in multiple devices"
                 android:textSize="15dp"
                 android:textColor="@color/textcolor"
                 android:textStyle="italic" />
@@ -247,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"
                 android:layout_marginLeft="120dp"
-                android:text="Enabling the dark mode to protect your eye during the night"
+                android:text="Enabling Dark Mode will allow us to enhance your experience by maintaining the minimum colour contrast required for readability. "
                 android:textSize="15dp"
                 android:textColor="@color/textcolor"
                 android:textStyle="italic" />

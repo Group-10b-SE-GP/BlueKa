@@ -1,6 +1,5 @@
 # BlueKa
-Final application will be here. All the codes should be merged here!!
-Merging all the codes for the final application
+The aim is to develop an Android app that connects to other nearby smartphones, which then perform a coordinated action together. The action shall be to play the "Merdeka!" sound snippet synchronously.
 
 ## Tasks Completed
 1. Initial BlueKa UI
@@ -10,5 +9,6 @@ Merging all the codes for the final application
 
 ## Tasks to be done
 1. Unit tests
-2. Adding build files to run from command line
+2. Writing comments in codes
+
 

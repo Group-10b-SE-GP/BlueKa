@@ -35,7 +35,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/verdana"
-        android:text="How many phones will connected?"
+        android:text="Number of devices in concert"
         android:textSize="16sp"
         android:textColor="@color/textcolor"/>
 

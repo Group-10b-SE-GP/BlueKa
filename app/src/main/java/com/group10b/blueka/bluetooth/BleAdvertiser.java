@@ -170,7 +170,7 @@ public class BleAdvertiser {
                 //   send the number of connected message
                 // }
 
-                if (num_connected == (MainActivity.getInstance().getMaxConnectedDevice())){
+                if ((num_connected == MainActivity.getInstance().getMaxConnectedDevice())){
                     try {
                         reply = msg.getBytes("UTF-8");
                     } catch (UnsupportedEncodingException e) {
