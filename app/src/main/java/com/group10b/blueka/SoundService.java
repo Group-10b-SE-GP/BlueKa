@@ -17,6 +17,7 @@ public class SoundService extends Service {
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
     private int originalVolume;
+    static boolean destroyed;
 
     @Nullable
     @Override
@@ -24,26 +25,16 @@ public class SoundService extends Service {
         return null;
     }
 
-
-
-    static boolean started;
-    static boolean destroyed;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        started = true;
         mediaPlayer = MediaPlayer.create(this, R.raw.merdeka);
-
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        //audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
-        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
     @Override
     public int onStartCommand (Intent intent,int flags, int startId){
-
         /**
          * Condition to verify if the phone is on ringer mode
          * If phone is muted, then the snippet shall not be played
@@ -52,6 +43,7 @@ public class SoundService extends Service {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.start();
+
         }
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

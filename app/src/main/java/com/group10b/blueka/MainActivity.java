@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toast toast;
     private static MainActivity instance;
     public static String offset;
-    public static boolean musicPlayed;
+
     ///sync
     final SntpClient sntpClient = new SntpClient();
     TimeOffset timeOffset;
@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             startService(new Intent(MainActivity.this, SoundService.class));
                             Toast.makeText(getApplicationContext(),"PLAYED",Toast.LENGTH_SHORT).show();
                             phoneConnected.setText("");
-                            musicPlayed = true;
+
                             //System.out.println("Played: "+"Yes");
                         } catch (Exception e) {
                             e.printStackTrace();

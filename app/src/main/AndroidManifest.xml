@@ -26,7 +26,8 @@
         </activity>
         <service
             android:enabled="true"
-            android:name=".SoundService">
+            android:name=".SoundService"
+            >
         </service>
     </application>
 
