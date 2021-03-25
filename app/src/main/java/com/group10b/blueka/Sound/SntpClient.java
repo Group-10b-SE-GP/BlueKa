@@ -105,9 +105,11 @@ public class SntpClient {
             systemTime = System.currentTimeMillis();
             if (systemTime >= mNtpTime){
                 offsetValue = systemTime - mNtpTime;
+                //true
                 offsetSign = '+';
             }else {
                 offsetValue = mNtpTime - systemTime;
+                //false
                 offsetSign = '-';
             }
 
@@ -123,6 +125,14 @@ public class SntpClient {
         }
 
         return true;
+    }
+
+    /**
+     * Method used for testing purposes
+     * @return current system time on device
+     */
+    public long getSystemTime(){
+        return System.currentTimeMillis();
     }
 
     /**

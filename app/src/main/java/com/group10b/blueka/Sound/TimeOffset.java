@@ -10,36 +10,12 @@ import com.group10b.blueka.MainActivity;
 
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Implement methods to obtain the offset value
+ * as well as the sign of the offset, that is,
+ * whether the offset is positive or negative
+ */
 public class TimeOffset {
-
-    final SntpClient sntpClient = new SntpClient();
-    //Context context;
-    //public TimeOffset(){ }
-
-   /*@SuppressLint("StaticFieldLeak")
-    public void getValue()  {
-       try {
-           new AsyncTask<Void, Integer, Boolean>() {
-               @Override
-               protected Boolean doInBackground(Void... params) {
-                   return sntpClient.requestTime("pool.ntp.org", 3000);
-               }
-               @Override
-               protected void onPostExecute(Boolean result) {
-                   if (result) {
-                       String offsetString = sntpClient.getOffsetString();
-                       System.out.println("Offset String: "+offsetString);
-                   }
-               }
-           }.execute().get();
-       } catch (ExecutionException e) {
-           e.printStackTrace();
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
-   }*/
-
-
 
     public long getOffsetValue(){
         //getValue();

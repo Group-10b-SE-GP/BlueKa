@@ -2,7 +2,6 @@ package com.group10b.blueka;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -11,13 +10,13 @@ import com.group10b.blueka.Sound.SntpClient;
 import com.group10b.blueka.Sound.TimeOffset;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -25,16 +24,31 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class TimeOffsetTest {
+public class SntpClientTest {
 
     final SntpClient sntpClient = new SntpClient();
     private TimeOffset timeOffset;
     private static long currentNetworkTime;
     private static long currentSystemTime;
 
-
     @Before
-    public void beforeTest() {
+    public void beforeTest(){
+        timeOffset = new TimeOffset();
+        MainActivity.offset = sntpClient.getOffsetString();
+    }
+
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("com.group10b.blueka", appContext.getPackageName());
+    }
+
+    /**
+     * Method used to test whether NTP time is retrieved successfully
+     */
+    @Test
+    public void networkTimeTest(){
         try {
             new AsyncTask<Void, Integer, Boolean>() {
                 @Override
@@ -44,8 +58,8 @@ public class TimeOffsetTest {
                 @Override
                 protected void onPostExecute(Boolean result) {
                     if (result) {
-                        long systemTime = sntpClient.getSystemTime();
                         long ntpTime = sntpClient.getNtpTime();
+                        long systemTime = sntpClient.getSystemTime();
                     }
                 }
             }.execute().get();
@@ -56,33 +70,32 @@ public class TimeOffsetTest {
         }
         currentNetworkTime = sntpClient.getNtpTime();
         currentSystemTime = sntpClient.getSystemTime();
-        timeOffset = new TimeOffset();
-        MainActivity.offset = sntpClient.getOffsetString();
-    }
-
-    @Test
-    public void offsetSignTest(){
-        boolean sign;
-        if (currentSystemTime >= currentNetworkTime){
-            sign = true;
-        } else {
-            sign = false;
-        }
-        assertEquals(sign, timeOffset.getOffsetSign());
-    }
-
-
-    @Test
-    public void offsetValueTest(){
-        long offset;
-        if (currentSystemTime >= currentNetworkTime){
-            offset = currentSystemTime - currentNetworkTime;
-        } else {
-            offset = currentNetworkTime - currentSystemTime;
-        }
-        if (offset > 0 && timeOffset.getOffsetValue() > 0){
+        /**
+         * verify whether network time is received
+         */
+        if (currentNetworkTime> 0){
             assertTrue(true);
         }
+
+        /**
+         * We verify if the offset is positive
+         * Then check if the correct network time is received
+         */
+        if (timeOffset.getOffsetSign()){
+            if (currentNetworkTime <= currentSystemTime){
+                assertTrue(true);
+            }
+        } else {
+            if (currentNetworkTime > currentSystemTime){
+                assertTrue(true);
+            }
+        }
     }
+
+
+
+
+
+
 
 }

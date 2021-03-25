@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 protected void onPostExecute(Boolean result) {
                     if (result) {
                         String offsetString = sntpClient.getOffsetString();
-
                     }
                 }
             }.execute().get();
