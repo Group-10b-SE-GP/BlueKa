@@ -56,8 +56,8 @@ The idea of this project is that, as the user moves around, their phone will con
 </p>
 
 <p float="left">
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/SettingsPage.jpg width="200" height="450"/>
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/DarkModeHomePage.jpg width="300" height="400"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/SettingsPage.jpg width="230" height="500"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/DarkModeSettingsPage.jpg width="230" height="500"/>
 </p>
 
 ## Summary
