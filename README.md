@@ -22,7 +22,7 @@ The idea of this project is that, as the user moves around, their phone will con
 
 ### Using BlueKa
 1. Once the application is launched on the device, the user shall be requested to enable Bluetooth.
-<p float="left">
+<p float="center">
     <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/HomePage.jpg width="230" height="490"/>
     <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/EnableBluetooth.jpg width="230" height="490"/>
 </p>
@@ -60,4 +60,5 @@ The idea of this project is that, as the user moves around, their phone will con
     <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/DarkModeSettingsPage.jpg width="230" height="490"/>
 </p>
 
-## Summary
+
+
