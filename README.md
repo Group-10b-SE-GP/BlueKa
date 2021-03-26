@@ -1,5 +1,5 @@
 # BlueKa - Android Application
-This Android Application allows users to connect to nearby smartphones using the Bluetooth Low Energy (BLE) technology and thereby perform an action in unison. This action involves playing the \Merdeka!" sound snippet in coordination.
+This Android Application allows users to connect to nearby smartphones using the Bluetooth Low Energy (BLE) technology and thereby perform an action in unison. This action involves playing the "Merdeka!" sound snippet in coordination.
 
 ## Project Description
 The idea of this project is that, as the user moves around, their phone will connect to other phones nearby that have the same app installed. Under certain circumstances an agreement will be reached, and the phones will perform an action together. In this case, the action is to play a sound snippet simultaneously. For example, given that a user has the app installed on their phone, and has it configured to connect to a minimum of four other phones within the range of their bluetooth radio. Once the network of five phones is established, the phones will negotiate a time within a few seconds from the connection and play the Merdeka! chime simultaneously at full volume.
