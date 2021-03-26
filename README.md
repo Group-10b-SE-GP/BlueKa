@@ -23,18 +23,18 @@ The idea of this project is that, as the user moves around, their phone will con
 ### Using BlueKa
 1. Once the application is launched on the device, the user shall be requested to enable Bluetooth.
 <p float="left">
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/HomePage.jpg width="300" height="400"/>
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/EnableBluetooth.jpg width="300" height="400"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/HomePage.jpg width="200" height="450"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/EnableBluetooth.jpg width="200" height="450"/>
 </p>
 
 2. The user shall then be able to set the number of devices that can participate in the concert.
 <p float="left">
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/SetNumber.jpg width="300" height="400"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/SetNumber.jpg width="200" height="500"/>
 </p>
 
 3. This is followed by pressing on the connect button. If location permission is switched off, then the user shall be requested to enable location.
 <p float="left">
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScrennshots/EnableLocation.jpg width="300" height="400"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/EnableLocation.jpg width="250" height="500"/>
 </p>
 
 4. Once the device successfully connects based on the set conditions, the snippet shall be heard and a toast message shall be seen. This operation does not necessarily require the application to be open. This is because once the user presses the connect button,  the device can either scan or advertise, and form a network to play the snippet even when the application is running in background.
@@ -51,7 +51,7 @@ The idea of this project is that, as the user moves around, their phone will con
 
 6. The user can further switch between light and dark mode for the application.
 <p float="left">
-    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScrennshots/HomePage.jpg width="300" height="400"/>
+    <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/HomePage.jpg width="300" height="400"/>
     <img src=github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/DarkModeHomePage.jpg width="300" height="400"/>
 </p>
 
