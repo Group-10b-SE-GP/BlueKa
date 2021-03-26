@@ -11,15 +11,16 @@ import com.group10b.blueka.MainActivity;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Implement methods to obtain the offset value
- * as well as the sign of the offset, that is,
- * whether the offset is positive or negative
+ * TimeOffset class that implements methods obtain the offset value.
+ * And also allows us to verify whether the time difference obtained is positive or negative.
  */
 public class TimeOffset {
 
+    /**
+     * Retrieves the offset String from AsynTask in MainActivity class and extract the value only
+     * @return offset value of type Long
+     */
     public long getOffsetValue(){
-        //getValue();
-        //String str = sntpClient.getOffsetString();
         String str = MainActivity.offset;
         Log.d("Phone Offset: ", str);
         int length = str.length();
@@ -27,9 +28,11 @@ public class TimeOffset {
         return Long.parseLong(substr);
     }
 
+    /**
+     * Retrieves the offset String from Asynctak in MainActivity class and extrac the sign only
+     * @return true if the offset is positive and false if the offset is negative
+     */
     public Boolean getOffsetSign(){
-        //getValue();
-        //String str = sntpClient.getOffsetString();
         String str = MainActivity.offset;
         Boolean value;
         char sign = str.charAt(0);

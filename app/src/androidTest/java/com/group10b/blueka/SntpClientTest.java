@@ -19,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * SntpClientTest, which will execute on an Android device.
+ * Implement test method to verify whether the NTP time is retrieved successfully.
+ * Uses @Before annotation to obtain instance from MainActivity class
  */
 @RunWith(AndroidJUnit4.class)
 public class SntpClientTest {
@@ -37,16 +37,6 @@ public class SntpClientTest {
         MainActivity.offset = sntpClient.getOffsetString();
     }
 
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.group10b.blueka", appContext.getPackageName());
-    }
-
-    /**
-     * Method used to test whether NTP time is retrieved successfully
-     */
     @Test
     public void networkTimeTest(){
         try {
@@ -70,17 +60,14 @@ public class SntpClientTest {
         }
         currentNetworkTime = sntpClient.getNtpTime();
         currentSystemTime = sntpClient.getSystemTime();
-        /**
-         * verify whether network time is received
-         */
+
+        //verify whether network time is received
         if (currentNetworkTime> 0){
             assertTrue(true);
         }
 
-        /**
-         * We verify if the offset is positive
-         * Then check if the correct network time is received
-         */
+        //We verify if the offset is positive
+        //Then check if the correct network time is received
         if (timeOffset.getOffsetSign()){
             if (currentNetworkTime <= currentSystemTime){
                 assertTrue(true);
@@ -91,11 +78,5 @@ public class SntpClientTest {
             }
         }
     }
-
-
-
-
-
-
 
 }

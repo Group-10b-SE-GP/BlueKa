@@ -284,7 +284,11 @@ public class BleScanner {
         }
     }
 
-    ////////////////////////////////////////////////For Sound Sync////////////////////////////////////////////////////////////////
+    /**
+     * This method takes as parameter the atomic time at which the server shall play the snippet and uses that timestamp to compute the time at which the client should play the snippet.
+     * @param timestamp Atomic time at which the server device is set to play the music
+     * @return The system time at which the client device shall play the music
+     */
     public long getClientMusicTime(long timestamp){
         Boolean offsetSign = timeOffset.getOffsetSign();
         long offsetValue = timeOffset.getOffsetValue();

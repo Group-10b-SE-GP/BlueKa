@@ -164,12 +164,6 @@ public class BleAdvertiser {
 
                 byte[] reply = new byte[0];
 
-                //if(num_connected == seekbarNum){
-                //  send play music message
-                // }else{
-                //   send the number of connected message
-                // }
-
                 if ((num_connected == MainActivity.getInstance().getMaxConnectedDevice())){
                     try {
                         reply = msg.getBytes("UTF-8");
@@ -246,11 +240,20 @@ public class BleAdvertiser {
     }
 
 
-    /////////////////////////////////////////For Sound Sync///////////////////////////////////////////////////////
+    /**
+     * This method captures the current time on the device and adds a certain value (e.g 6000 ms) to it in order to obtain a future timestamp to play the snippet.
+     * @param currentSystemTime the current time on the device
+     * @return a future time to play the music
+     */
     public long getServerMusicTime(long currentSystemTime){
         return (currentSystemTime + 6000);
     }
 
+    /**
+     * This method takes the timestamp at which the server device is set to play the music and adjust the time according to the offset value
+     * @param serverMusicTime system time at which the server device shall play the snippet
+     * @return atomic time at which the server shall play the music
+     */
     public long getTimestamp(long serverMusicTime) {
         long timestamp;
         Boolean offsetSign = timeOffset.getOffsetSign();

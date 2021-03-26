@@ -20,9 +20,8 @@ import java.util.concurrent.ExecutionException;
 import static org.junit.Assert.*;
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * TimeOffsetTest, which will execute on an Android device.
+ * Uses @Before annotation to obtain the network time and system time using AsyncTask class
  */
 @RunWith(AndroidJUnit4.class)
 public class TimeOffsetTest {
@@ -60,6 +59,9 @@ public class TimeOffsetTest {
         MainActivity.offset = sntpClient.getOffsetString();
     }
 
+    /**
+     * Allows us to test whether the time difference obtained is positive or negative
+     */
     @Test
     public void offsetSignTest(){
         boolean sign;
@@ -72,6 +74,9 @@ public class TimeOffsetTest {
     }
 
 
+    /**
+     * Allows us to verify whether the offset value obtained is within a suitable range
+     */
     @Test
     public void offsetValueTest(){
         long offset;

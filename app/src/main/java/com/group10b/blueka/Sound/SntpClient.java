@@ -22,14 +22,15 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 /**
- * Simple SNTP client class for retrieving network time.
+ * Simple SNTP client class for retrieving network time and computing offset between system time and network time
+ * Refactored version obtained from Online Android Library.
+ * See <a href="https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/net/SntpClient.java">https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/net/SntpClient.java</a>
  */
 
 public class SntpClient {
 
     private static final String TAG = "SntpClient";
 
-    //private static final int REFERENCE_TIME_OFFSET = 16;
     private static final int ORIGINATE_TIME_OFFSET = 24;
     private static final int RECEIVE_TIME_OFFSET = 32;
     private static final int TRANSMIT_TIME_OFFSET = 40;
@@ -98,10 +99,11 @@ public class SntpClient {
 
             long clockOffset = ((receiveTime - originateTime) + (transmitTime - responseTime))/2;
 
-
             // save our results - use the times on this side of the network latency
             // (response rather than request time)
             mNtpTime = responseTime + clockOffset;
+
+            // get current system time
             systemTime = System.currentTimeMillis();
             if (systemTime >= mNtpTime){
                 offsetValue = systemTime - mNtpTime;
@@ -128,8 +130,8 @@ public class SntpClient {
     }
 
     /**
-     * Method used for testing purposes
-     * @return current system time on device
+     * Method implemented for testing purposes in SntpClientTest class
+     * @return current system time of device
      */
     public long getSystemTime(){
         return System.currentTimeMillis();
@@ -137,16 +139,25 @@ public class SntpClient {
 
     /**
      * Returns the time computed from the NTP transaction.
-     *
      * @return time value computed from NTP server response.
      */
     public long getNtpTime() {
         return mNtpTime;
     }
 
+    /**
+     * Method that returns the different between system time and network time
+     * @return offset value as Long
+     */
     public long getOffsetValue() {return offsetValue;}
 
-    public String getOffsetString(){return String.valueOf(offsetSign) + String.valueOf(offsetValue); }
+    /**
+     * Method that allows us to obtain the offset value along with its sign
+     * Useful as it allows us to know whether there is a positive or negative time difference
+     * @return offset String
+     */
+    public String getOffsetString(){return String.valueOf(offsetSign) + String.valueOf(offsetValue);}
+
     /**
      * Returns the reference clock value (value of SystemClock.elapsedRealtime())
      * corresponding to the NTP time.
@@ -159,7 +170,6 @@ public class SntpClient {
 
     /**
      * Returns the round trip time of the NTP transaction
-     *
      * @return round trip time in milliseconds.
      */
     public long getRoundTripTime() {

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ble_scanner = new BleScanner(this.getApplicationContext());
         phoneConnected = (TextView)findViewById(R.id.phone);
 
-        ////////////////////////////////////////For Sound Sync////////////////////////////////////////////
+        //---------------------------OFFSET FOR SOUND SYNCHRONIZATION--------------------------
         try {
             new AsyncTask<Void, Integer, Boolean>() {
                 @Override
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timeOffset = new TimeOffset();
         timeOffset.getOffsetValue();
 
-        //////////////////////////////////////////////////////////////////////////////////////////////
+
 
         //-----------------------------SEEKBARCODE----------------------
         seekBar = findViewById(R.id.seekbarid);
@@ -322,16 +322,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onDismiss(DialogInterface dialog) {
                     Log.d(Constants.TAG,"Requesting permissions after explanation");
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
                 }
             });
             builder.show();
-
-
         } else{
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
-
     }
 
     @Override
@@ -351,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
     private void simpleToast(String message, int duration){
         toast = Toast.makeText(this, message, duration);
         toast.setGravity(Gravity.CENTER, 0,0);
@@ -358,9 +355,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //////////////////////////////////////////////////////For Sound Sync////////////////////////////////////////////////
+    /**
+     * Method that allows us to compute the sleep time of the device and to play the snippet after sleep operation.
+     * The sleep time is obtained using the following formula, Sleep Duration = Timestamp - Current System Time.
+     * Once the snippet is played a toast message is seen
+     * @param timestamp time at which the snippet is to be played
+     */
     public void playMusic(long timestamp) {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -368,24 +369,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         try {
-                            //Toast.makeText(getApplicationContext(),"WAIT",Toast.LENGTH_SHORT).show();
                             TimeUnit.MILLISECONDS.sleep(timestamp - System.currentTimeMillis());
-                            /*new CountDownTimer(timestamp - System.currentTimeMillis(),100){
-                                @Override
-                                public void onTick(long millisUntilFinished) {
-                                    timetext.setText("Seconds Remaining: "+millisUntilFinished/1000);
-                                }
-                                @Override
-                                public void onFinish() {
-                                    startService(new Intent(MainActivity.this, SoundService.class));
-                                    timetext.setText("Played!");
-                                }
-                            }.start();*/
                             startService(new Intent(MainActivity.this, SoundService.class));
                             Toast.makeText(getApplicationContext(),"PLAYED",Toast.LENGTH_SHORT).show();
                             phoneConnected.setText("");
-
-                            //System.out.println("Played: "+"Yes");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
