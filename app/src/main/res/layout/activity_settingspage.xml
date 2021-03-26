@@ -12,7 +12,7 @@
         android:id="@+id/toolbarsettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="#00AEC5"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:ignore="MissingConstraints">
         <ImageView

@@ -217,6 +217,7 @@ public class Settingspage extends AppCompatActivity {
 
     }
 
+
     public void setBluetoothButtonStatus(){
         if (myBluetoothAdapter.isEnabled()){
             bluetoothbutton.setChecked(true);

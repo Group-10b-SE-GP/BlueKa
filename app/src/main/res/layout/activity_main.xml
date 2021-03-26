@@ -12,7 +12,7 @@
         android:id="@+id/toolbarmain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="#00AEC5"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
 
         <TextView
@@ -62,9 +62,9 @@
         android:progress="2"
         android:scaleX="1.85"
         android:scaleY="1.85"
-        android:thumbTint="@color/thumbtintcolor"
-        android:progressBackgroundTint="@color/progressBackgroundTint"
-        android:progressTint="@color/progressTint"/>
+        android:thumbTint="#00AEC5"
+        android:progressBackgroundTint="#8E8481"
+        android:progressTint="#00AEC5"/>
     <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
