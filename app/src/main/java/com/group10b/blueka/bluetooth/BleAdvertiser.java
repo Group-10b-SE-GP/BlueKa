@@ -246,7 +246,7 @@ public class BleAdvertiser {
      * @return a future time to play the music
      */
     public long getServerMusicTime(long currentSystemTime){
-        return (currentSystemTime + 6000);
+        return (currentSystemTime + 8000);
     }
 
     /**

@@ -60,5 +60,6 @@ The idea of this project is that, as the user moves around, their phone will con
     <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/DarkModeSettingsPage.jpg width="230" height="490"/>
 </p>
 
-
+### Summary
+All of the requirements requested by the client have been achieved through the implementation of this project.
 
