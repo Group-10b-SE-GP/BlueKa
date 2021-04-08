@@ -21,7 +21,7 @@ The idea of this project is that, as the user moves around, their phone will con
 3. Build and run the application on Android Studio.
 
 ### Using BlueKa
-1. Download APK file onto your Android device. The APK file can be found [here](https://numcmy-my.sharepoint.com/:f:/g/personal/hcysu1_nottingham_edu_my/EpOdb1L8cJJOqjs7BB_gtTUBOhmGNCyw8jloECnYOUJK4g?e=azBJ4r).
+1. Download APK file onto your Android device. The APK file can be found [here](https://numcmy-my.sharepoint.com/:u:/g/personal/hcysu1_nottingham_edu_my/EfAnPTZp2mFPmzww33iJHfIBL1HMfmv63cUApr_Zt8PRIg?e=pLk07L).
 2. Once the application is launched on the device, the user shall be requested to enable Bluetooth.
 <p align="center">
     <img src=https://github.com/Group-10b-SE-GP/BlueKa/blob/master/BlueKaScreenshots/HomePage.jpg width="230" height="490"/>
