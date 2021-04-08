@@ -11,6 +11,9 @@ import com.group10b.blueka.MainActivity;
 import static com.group10b.blueka.Constants.TAG;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * An operation by the scanner to request a write to the characteristic of the server.
+ */
 public class WriteRequestOperation extends Operation {
     private String message;
     public WriteRequestOperation(BluetoothGatt gatt, String message){

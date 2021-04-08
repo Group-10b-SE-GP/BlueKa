@@ -7,6 +7,10 @@ import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+/**
+ * Operation for the server to write its local characteristic.
+ */
 public class WriteCharacteristicOperation extends Operation {
     private String message;
     private BluetoothGattServer mGattServer;

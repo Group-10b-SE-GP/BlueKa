@@ -39,7 +39,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A wrapper for all the functionality of scanning. The application will first be a scanner using
+ * this class BleScanner to scan. If nothing is scanned, then the application will be a advertiser using
+ * BleAdvertiser. The app is expected to actively use one class at a time.
+ */
 public class BleScanner {
     private BluetoothLeScanner scanner = null;
     private BluetoothAdapter bluetooth_adapter = null;
@@ -62,6 +66,10 @@ public class BleScanner {
     //However, the onConnectionStateChange is not triggered sometimes to close the gatt.
     //We need a Runnable to run it if the onConnectionStateChange is not triggered.
     //If onConnectionStateChange works, it will cancel this Runnable which also close the gatt.
+    /**
+     * This is a backup delayed runnable function for gatt closing,
+     * in case the close operation is not successful.
+     */
     private Runnable GattCloseRun= new Runnable(){
         @Override
         public void run()
@@ -72,6 +80,11 @@ public class BleScanner {
     };
 
     //Constructor.
+
+    /**
+     * An constructor for the class, set up all the components needed for Bluetooth scanner.
+     * @param context An environment, in this case is the device.
+     */
     public BleScanner(Context context){
         this.context = context;
         operationManager = new OperationManager();
@@ -91,6 +104,13 @@ public class BleScanner {
     }
 
     //startScanning is call when scanner start scanning.
+
+    /**
+     * MainActivity can call this method to let the scanner start scanning.
+     * @param scan_results_consumer An interface to trigger methods in MainActivity to control user
+     *                              interface.
+     * @param stop_after_ms The duration of scanning.
+     */
     public void startScanning(final ScanResultsConsumer scan_results_consumer, long stop_after_ms){
         if(scanning){
             Log.d(Constants.TAG, "Already scanning so ignoring startScanning request");
@@ -137,6 +157,10 @@ public class BleScanner {
         scanner.startScan(filters, settings, scan_callback);
     }
     //stopScanning is call when scanner stop scanning.
+
+    /**
+     * MainActivity can call this method to let the scanner stop scanning.
+     */
     public void stopScanning(){
         setScanning(false);
         Log.d(Constants.TAG,"Stopping scanning");
@@ -145,7 +169,15 @@ public class BleScanner {
 
     //Define what happens after scanner have some scan result, also where the scan result store.
     //Connect the device when a device is found.
+    /**
+     * Bluetooth LE scan callbacks. Scan results are reported using these callbacks.
+     */
     private ScanCallback scan_callback = new ScanCallback() {
+        /**
+         * Callback when a BLE advertisement has been found.
+         * @param callbackType int: Determines how this callback was triggered. Could be one of ScanSettings.CALLBACK_TYPE_ALL_MATCHES, ScanSettings#CALLBACK_TYPE_FIRST_MATCH or ScanSettings#CALLBACK_TYPE_MATCH_LOST
+         * @param result ScanResult: A Bluetooth LE scan result.
+         */
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             checkScan = true;
@@ -160,17 +192,30 @@ public class BleScanner {
 
     };
 
+    /**
+     * A method for scanner to connected the scanned device.
+     * @param device The device to connect.
+     */
     private void connectDevice(BluetoothDevice device){
         mGatt = device.connectGatt(context, false, gattClientCallback);
         Log.i(TAG,"connected inside");
     }
 
+    /**
+     * A method to check the scanning status of the scanner.
+     * @return true if the scanner is scanning.
+     */
     public boolean isScanning(){
         return scanning;
     }
 
     // setScanning is called when it start scanning or stop scanning
     // To adjust the UI, and variable.
+
+    /**
+     * A method to set boolean value of scanning
+     * @param scanning the boolean value representing the status of scanning. Will be set the true when scanning.
+     */
     private void setScanning(boolean scanning){
         this.scanning = scanning;
         if(!scanning){
@@ -189,7 +234,17 @@ public class BleScanner {
     // onServiceDiscovered is called when service of connected device is found.
     // onCharacteristicChanged is called when the advertiser notify.
     // onCharacteristicWrite is called when writeRequest is successfully sent.
+
+    /**
+     *This abstract class is used to implement BluetoothGatt callbacks.
+     */
     private class GattClientCallback extends BluetoothGattCallback{
+        /**
+         * Callback indicating when GATT client has connected/disconnected to/from a remote GATT server.
+         * @param gatt BluetoothGatt: GATT client
+         * @param status int: Status of the connect or disconnect operation. BluetoothGatt.GATT_SUCCESS if the operation succeeds.
+         * @param newState int: Returns the new connection state. Can be one of BluetoothProfile.STATE_DISCONNECTED or BluetoothProfile#STATE_CONNECTED
+         */
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState){
             super.onConnectionStateChange(gatt, status, newState);
@@ -214,6 +269,12 @@ public class BleScanner {
             }
         }
         //write
+
+        /**
+         * Callback invoked when the list of remote services, characteristics and descriptors for the remote device have been updated, ie new services have been discovered.
+         * @param gatt BluetoothGatt: GATT client invoked BluetoothGatt#discoverServices
+         * @param status int: BluetoothGatt#GATT_SUCCESS if the remote device has been explored successfully.
+         */
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status){
             super.onServicesDiscovered(gatt, status);
@@ -225,6 +286,11 @@ public class BleScanner {
             operationManager.request(new WriteRequestOperation(gatt, message));
         }
 
+        /**
+         * Callback triggered as a result of a remote characteristic notification.
+         * @param gatt BluetoothGatt: GATT client the characteristic is associated with
+         * @param characteristic BluetoothGattCharacteristic: Characteristic that has been updated as a result of a remote notification event.
+         */
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
@@ -265,6 +331,18 @@ public class BleScanner {
             }
 
         }
+
+        /**
+         * Callback indicating the result of a characteristic write operation.
+         *
+         * If this callback is invoked while a reliable write transaction is in progress, the value
+         * of the characteristic represents the value reported by the remote device. An application
+         * should compare this value to the desired value to be written. If the values don't match,
+         * the application must abort the reliable write transaction.
+         * @param gatt BluetoothGatt: GATT client invoked BluetoothGatt#writeCharacteristic
+         * @param characteristic BluetoothGattCharacteristic: Characteristic that was written to the associated remote device.
+         * @param status int: The result of the write operation BluetoothGatt#GATT_SUCCESS if the operation succeeds.
+         */
         @Override
         public void onCharacteristicWrite (BluetoothGatt gatt,
                                            BluetoothGattCharacteristic characteristic,
@@ -275,6 +353,9 @@ public class BleScanner {
         }
     }
 
+    /**
+     * A method to disconnect the gatt server connected.
+     */
     public void disconnectGattServer(){
         mConnected = false;
         mInitialized = false;

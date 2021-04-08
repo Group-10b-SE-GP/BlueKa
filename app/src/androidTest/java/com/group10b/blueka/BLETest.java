@@ -30,6 +30,8 @@ import static org.junit.Assert.*;
 public class BLETest {
     private static UUID uuidTest = UUID.fromString("7D2EA28A-F7BD-485A-BD9D-92AD6ECFE933");
     private Handler mHandlerTest;
+    private BleAdvertiser bleAdvertiser;
+    private BleScanner bleScanner;
     @Test
     public void BLESupportTest(){
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();

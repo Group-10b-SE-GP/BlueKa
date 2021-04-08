@@ -1,6 +1,10 @@
 package com.group10b.blueka;
 
 import java.util.UUID;
+
+/**
+ * A class storing all the contants values.
+ */
 public class Constants {
     public static String SERVICE_STRING = "7D2EA28A-F7BD-485A-BD9D-92AD6ECFE931";
     public static UUID SERVICE_UUID = UUID.fromString(SERVICE_STRING);

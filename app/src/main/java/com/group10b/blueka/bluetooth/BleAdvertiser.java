@@ -36,7 +36,10 @@ import java.util.UUID;
 
 import static android.content.Context.BLUETOOTH_SERVICE;
 
-
+/**
+ * An Wrapper for all activity of advertising. The device are expected to be an scanner, if nothing
+ * can be scanned, then the device will be an advertiser instead.
+ */
 public class BleAdvertiser {
     private OperationManager operationManager = new OperationManager();
     private BluetoothLeAdvertiser advertiser;
@@ -49,6 +52,10 @@ public class BleAdvertiser {
     private ScanResultsConsumer scan_results_consumer;
     TimeOffset timeOffset = new TimeOffset();
 
+    /**
+     * Constructor, to set up Bluetooth Low Energy components.
+     * @param context the environment, which refer to the device.
+     */
     public BleAdvertiser(Context context){
         this.context = context;
         advertiser = BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
@@ -57,11 +64,22 @@ public class BleAdvertiser {
         mGattServer = mBluetoothManager.openGattServer(context, gattServerCallback);
         setupServer();
     }
+
+    /**
+     * A method to pass the interface to the MainActivity. Any update from the Bluetooth Advertiser
+     * will be use this method to update the user interface.
+     * @param src
+     */
     public void updateResultConsumer(ScanResultsConsumer src){
         scan_results_consumer = src;
     }
     // setupServer() is called when initialise the advertiser.
     // Define the server we want to advertise.
+
+    /**
+     * Set up the server for advertiser to advertises.
+     * Settings of the server will be set here as well.
+     */
     private void setupServer(){
         BluetoothGattService service = new BluetoothGattService(MainActivity.getInstance().numOfConnectWanted(),BluetoothGattService.SERVICE_TYPE_PRIMARY);
         //write
@@ -74,6 +92,10 @@ public class BleAdvertiser {
     }
 
     //startAdvertising() is called when advertiser want to start advertising.
+
+    /**
+     * MainActivity can call this method to let the advertiser start advertising the server.
+     */
     public void startAdvertising(){
         if(advertising){
             Log.d(Constants.TAG, "Already advertising");
@@ -103,13 +125,27 @@ public class BleAdvertiser {
     }
 
     // This define what happen when advertising is failed on success.
+    /**
+     * This is a callback, when advertising is successful, any result from the advertising
+     * will be handled by callbacks.
+     */
     private AdvertiseCallback advertisingCallback = new AdvertiseCallback() {
+        /**
+         * This method will be call when the advertising is sucessful, here we have some logs to
+         * confirm the device is advertising sucessfully.
+         * @param settingsInEffect
+         */
         @Override
         public void onStartSuccess(AdvertiseSettings settingsInEffect) {
             super.onStartSuccess(settingsInEffect);
             Log.d(Constants.TAG,"Advertise success");
         }
 
+        /**
+         * This method will be called when the advertising is failed. We print the error code so we
+         * know the reason why it failed to advertise.
+         * @param errorCode
+         */
         @Override
         public void onStartFailure(int errorCode) {
             Log.e( "BLE", "Advertising onStartFailure: " + errorCode );
@@ -117,12 +153,18 @@ public class BleAdvertiser {
         }
     };
 
-    // stopAdvertising() is called when you need advertiser to stop advertising.
+    /**
+     * This method can be called by MainActivity to make the advertiser stop advertise.
+     */
     public void stopAdvertising(){
         setAdvertising(false);
         advertiser.stopAdvertising(advertisingCallback);
     }
 
+    /**
+     * A boolean method to check if the advertiser advertising.
+     * @return true if the advertiser advertising, else false.
+     */
     public boolean isAdvertising(){return advertising;}
     void setAdvertising(boolean advertising){
         this.advertising = advertising;
@@ -133,8 +175,23 @@ public class BleAdvertiser {
     // onCharacteristicWriteRequest() is called when we receive write request from scanner.
     // onConnectionStateChange is called when device is connected or disconnected.
     // onNotificationSent is called when a notification is send to one device.
+
+    /**
+     * An object to handled all the events in Gatt connection after the advertiser connected by a scanner.
+     */
     private class GattServerCallback extends BluetoothGattServerCallback{
         //write
+
+        /**
+         * A remote client has requested to write a local characteristic.
+         * @param device The remote device that has requested the write operation
+         * @param requestId The Id of the request
+         * @param characteristic Characteristic to be written to.
+         * @param preparedWrite  true, if this write operation should be queued for later execution.
+         * @param responseNeeded  true, if the remote device requires a response
+         * @param offset The offset given for the value
+         * @param value The value the client wants to assign to the characteristic
+         */
         @Override
         public void onCharacteristicWriteRequest(BluetoothDevice device,
                                                  int requestId,
@@ -206,6 +263,13 @@ public class BleAdvertiser {
 //                }
             }
         }
+
+        /**
+         * Callback indicating when a remote device has been connected or disconnected.
+         * @param device BluetoothDevice: Remote device that has been connected or disconnected.
+         * @param status int: Status of the connect or disconnect operation.
+         * @param newState int: Returns the new connection state. Can be one of BluetoothProfile.STATE_DISCONNECTED or BluetoothProfile#STATE_CONNECTED
+         */
         @Override
         public void onConnectionStateChange (BluetoothDevice device,
                                              int status,
@@ -223,6 +287,15 @@ public class BleAdvertiser {
                 Log.i(TAG,"Yes, device removed");
             }
         }
+
+        /**
+         * Callback invoked when a notification or indication has been sent to a remote device.
+         *
+         * When multiple notifications are to be sent, an application must wait for this callback to be received before sending additional notifications.
+         * Here we use to inform the queueManager that the operation has completed.
+         * @param device BluetoothDevice: The remote device the notification has been sent to
+         * @param status int: BluetoothGatt#GATT_SUCCESS if the operation was successful
+         */
         @Override
         public void onNotificationSent (BluetoothDevice device,
                                         int status){
@@ -232,7 +305,9 @@ public class BleAdvertiser {
         }
     }
 
-
+    /**
+     * A method to close the server.
+     */
     private void stopServer(){
         if(mGattServer != null){
             mGattServer.close();

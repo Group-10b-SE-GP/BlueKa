@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.group10b.blueka.Constants;
 
-
+/**
+ * An operation to close the gatt profile by either scanner or advertiser.
+ */
 public class GattCloseOperation extends Operation {
     public GattCloseOperation(BluetoothGatt gatt){
         super(gatt);
