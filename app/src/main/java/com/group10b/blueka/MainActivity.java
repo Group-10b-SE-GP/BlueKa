@@ -46,6 +46,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Main class
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScanResultsConsumer
 {
     Button connectButton;

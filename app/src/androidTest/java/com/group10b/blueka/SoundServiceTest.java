@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * SoundServiceTest, which will execute on an Android device.
  * Allows to to test methods in SoundService class by creating an intent and context.
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
 public class SoundServiceTest {
