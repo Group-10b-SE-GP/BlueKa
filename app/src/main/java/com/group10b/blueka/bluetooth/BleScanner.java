@@ -49,6 +49,7 @@ public class BleScanner {
     private BluetoothAdapter bluetooth_adapter = null;
     private BluetoothGatt mGatt;
     private Handler handler = new Handler();
+    //this is to send the data to the main activity to display on the UI
     private ScanResultsConsumer scan_results_consumer;
     private Context context;
     private boolean scanning = false;
@@ -184,7 +185,6 @@ public class BleScanner {
             if(!scanning){
                 return;
             }
-            //scan_results_consumer.candidateBleDevice(result.getDevice(), result.getScanRecord().getBytes(), result.getRssi());
             scanner.stopScan(scan_callback);
             BluetoothDevice bluetoothDevice = result.getDevice();
             connectDevice(bluetoothDevice);
@@ -218,15 +218,7 @@ public class BleScanner {
      */
     private void setScanning(boolean scanning){
         this.scanning = scanning;
-        if(!scanning){
-            scan_results_consumer.scanningStopped();
-        }else{
-            scan_results_consumer.scanningStarted();
-        }
     }
-
-
-
 
     // GattClientCallback is very important thing to define.
     // Whatever happen during the connection is conducted here.
@@ -310,21 +302,15 @@ public class BleScanner {
             long timestamp = Long.parseLong(result);
             long clientMusicTime = getClientMusicTime(timestamp);
 
-            //if(receivedTimeStaped){
-            //  playMusic
-            // }else{
-            // continue send number
-            // }
             if (result.length() > 2){
                 Log.d("Client Offset: ", String.valueOf(timeOffset.getOffsetValue()));
                 scan_results_consumer.receiveNumofConnected(Integer.toString(MainActivity.getInstance().getMaxConnectedDevice()));
                 MainActivity.getInstance().playMusic(clientMusicTime);
-                //disconnectGattServer();
+                disconnectGattServer();
             } else {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        //Toast.makeText(context, "client: " + result, Toast.LENGTH_LONG).show();
                         scan_results_consumer.receiveNumofConnected(result);
                     }
                 });

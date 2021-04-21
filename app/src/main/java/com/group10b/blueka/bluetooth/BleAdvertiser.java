@@ -243,24 +243,9 @@ public class BleAdvertiser {
                 }
 
 
-
                 for(BluetoothDevice dev : mDevices) {
                     operationManager.request(new WriteCharacteristicOperation(mGattServer, characteristic, dev));
                 }
-                //
-//                int num_connected = mDevices.size();
-//                String message = Integer.toString(num_connected);
-//                byte[] reply = new byte[0];
-//                try {
-//                    reply = message.getBytes("UTF-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    Log.e(TAG, "Failed to convert message string to byte array");
-//                }
-//
-//                characteristic.setValue(reply);
-//                for(BluetoothDevice dev : mDevices) {
-//                    mGattServer.notifyCharacteristicChanged(dev, characteristic, false);
-//                }
             }
         }
 

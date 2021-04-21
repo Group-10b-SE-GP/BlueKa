@@ -226,34 +226,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            return Constants.SERVICE_UUID10;
        }
     }
-    //This will be call by the scanner when scanner scan something.
-    //This notify the list to display the device scanned.
-    @Override
-    public void candidateBleDevice(BluetoothDevice device, byte[] scan_record, int rssi) {
-
-
-    }
-    //This will be call by the scanner when scanner start scan to change UI.
-    @Override
-    public void scanningStarted() {
-
-    }
-
-    //This will be call by the scanner when scanner stop scan to change UI.
-    @Override
-    public void scanningStopped() {
-
-    }
 
     @Override
     public void receiveNumofConnected(String res){
         phoneConnected.setText("Phones connected: " + res);
     }
 
-    //This is called to change button text.
-    private void setScanState(boolean value){
-
-    }
 
     public int getMaxConnectedDevice(){
         System.out.println("Seek"+numOfSeek);
@@ -265,30 +243,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return instance;
     }
 
-    //This will be call by the scanner when scanner scan something.
-
-
-    //onScan will be called when the user press the button.
-    /*public void onScan(View view){
-        if (!ble_scanner.isScanning()){
-            device_count = 0;
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-                    permission_granted = false;
-                    requestLocationPermission();
-                } else{
-                    Log.i(Constants.TAG, "Location permission has already been granted. Starting scanning");
-                    permission_granted = true;
-                }
-            }else{
-                permission_granted = true;
-            }
-            startScanning();
-
-        }else{
-            ble_scanner.stopScanning();
-        }
-    }*/
 
     //startScanning will be call when onScan call it.
     private void startScanning(){
@@ -329,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             builder.show();
         } else{
+            //this will be calling the onRequestPermissionsResult
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         }
     }
