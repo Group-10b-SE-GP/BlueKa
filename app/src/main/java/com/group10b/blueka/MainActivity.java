@@ -68,10 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static MainActivity instance;
     public static String offset;
 
-    ///sync
+    // Sound Synchronization
     final SntpClient sntpClient = new SntpClient();
     TimeOffset timeOffset;
-    TextView timetext;
     TextView phoneConnected;
 
     @SuppressLint("StaticFieldLeak")
@@ -80,8 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_main);
-        //Countdown Timer TextView
-        timetext = (TextView)findViewById(R.id.secondsRemaining);
+
         //Create a scanner.
         ble_scanner = new BleScanner(this.getApplicationContext());
         phoneConnected = (TextView)findViewById(R.id.phone);

@@ -218,11 +218,12 @@ public class Settingspage extends AppCompatActivity {
     }
 
 
+    /**
+     * Method to set the status of the Bluetooth button in settings page
+     */
     public void setBluetoothButtonStatus(){
         if (myBluetoothAdapter.isEnabled()){
             bluetoothbutton.setChecked(true);
-
-
         } else if (!myBluetoothAdapter.isEnabled()){
             bluetoothbutton.setChecked(false);
         }
@@ -365,16 +366,11 @@ public class Settingspage extends AppCompatActivity {
             // notify user you are not online
             return false;
         }
-        /*if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
-                && conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
-            // notify user you are not online
-            return false;
-        } else {
-            return true;
-        }*/
-        //return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    /**
+     * Refresh page
+     */
     public void refresh(){
         openMainpage();
         Intent intent = new Intent(this, com.group10b.blueka.Settingspage.class);
