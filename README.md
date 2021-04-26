@@ -13,14 +13,14 @@ The idea of this project is that, as the user moves around, their phone will con
 * Handling audio outputs in order to play the sound snippet at maximum volume and reset it back to the original volume.
 
 ## User Manual
-**Pre-requisite for debugging : Android Studio**
+**Pre-requisite for code development : Android Studio**
 
 ### Code Development
 1. Clone this repository and import into Android Studio.
 2. Before running the application on a device, USB debugging must be enabled. On the device, open Settings page, select Developer Options, and then enable USB debugging.
 3. Build and run the application on Android Studio.
 
-### Using BlueKa
+### Using BlueKa App
 1. Download APK file onto your Android device. The APK file can be found [here](https://github.com/Group-10b-SE-GP/BlueKa/tree/master/APK%20file).
 2. Once the application is launched on the device, the user shall be requested to enable Bluetooth.
 <p align="center">
